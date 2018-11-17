@@ -51,4 +51,4 @@ def country(url, start, end):
     else:
         print(f"Такої країни як {country_find} немає в списку")
 
-country(url, 0, 4)
+country(url, 0, 25)
