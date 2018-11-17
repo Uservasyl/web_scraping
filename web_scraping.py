@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import html, re
+import re
 from urllib.request import urlopen, Request
 
 

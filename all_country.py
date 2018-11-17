@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 
-'''Програма виводить назви країн із сайту web scraping'''
-
-import html, re
+import re, time
 from urllib.request import urlopen, Request
 url = 'http://example.webscraping.com/places/default/index/0'
-def split_url(url, start, end):
+
+def url_page(url, start, end):
+    ''' Шукаємо сторінки на сайті webscraping.com
+    '''
+    #start - індекс першої сторінки сайту
+    #end - індекс останньої сторінки
     lst = url.split('/')
     s = int(lst[-1])
     start = s + start
@@ -15,11 +18,12 @@ def split_url(url, start, end):
     return url
 
 def country(url, start, end):
-    #getting page from server
+    '''Програма виводить назви країн із сайту web scraping'''
     while start < end:
-        country_request = Request(split_url(url, start, end))
+        country_request = Request(url_page(url, start, end))
         country_page = urlopen(country_request).read()
         country_page = str(country_page)
+        # шукаємо індекси країн на кожній окремій сторінці
         COUNTRY_TAG = [m.start() for m in re.finditer('.png" />', country_page)]
         for tag_index in COUNTRY_TAG:
             country_tag_size = len(COUNTRY_TAG)
@@ -30,10 +34,12 @@ def country(url, start, end):
                     country += char
                 else:
                     break
-            print('{}'.format(country))
+            print('{}'.format(country)) 
         start += 1
+        time.sleep(1)
 
 
 
-# print("Country: ")
-country(url, 0, 26)
+print("Country: ")
+country(url, 0, 25)
+
